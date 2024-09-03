@@ -50,7 +50,5 @@ data_item = {
 }
 data.append(data_item)
 
-print(data)
-
 with open(PATH_TO_OUTFILE, 'w') as f:
     json.dump(data, f, indent=4)
