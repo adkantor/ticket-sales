@@ -3,7 +3,7 @@ import json
 import datetime
 
 
-SESSION_URL = "https://momkult.jegy.hu/program/lumen-christi-gospel-korus-adventi-koncert-151427/1028954"
+SESSION_URL = "https://momkult.jegy.hu/program/lumen-christi-gospel-korus-adventi-koncert-151427/1176162"
 TARGET_URL = "https://momkult.jegy.hu/auditview/ticketcount"
 # payload
 # event_id=1028954&basket=0
@@ -36,7 +36,7 @@ def get_contents(response):
 
 session = get_session()
 payload = {
-    'event_id': 1028954
+    'event_id': 1176162
 }
 
 response = session.post(TARGET_URL,
