@@ -4,7 +4,7 @@ ssh adkantor@192.168.50.174
 
 Copy file via SCP:
 scp adkantor@192.168.50.174:Projects/ticket-sales/outfile.json c:\Users\kanto\OneDrive\WORK\XPersonal\ticket-sales\outfile.json
-
+scp c:\Users\kanto\OneDrive\WORK\XPersonal\ticket-sales\.env adkantor@192.168.50.174:Projects/ticket-sales/.env
 
 CRON settings
 crontab -e
