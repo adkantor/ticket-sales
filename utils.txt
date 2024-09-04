@@ -1,0 +1,17 @@
+Connect via SSH:
+ssh adkantor@192.168.50.174
+
+
+Copy file via SCP:
+scp adkantor@192.168.50.174:Projects/ticket-sales/outfile.json c:\Users\kanto\OneDrive\WORK\XPersonal\ticket-sales\outfile.json
+
+
+CRON settings
+crontab -e
+
+1 * * * * * /usr/bin/python /home/adkantor/Projects/ticket-sales/script.py > /home/adkantor/Projects/ticket-sales/cron.log 2>&1
+
+line break at the end!
+
+^O + Enter --> save
+^X --> exit
