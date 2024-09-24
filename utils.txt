@@ -9,6 +9,10 @@ scp c:\Users\kanto\OneDrive\WORK\XPersonal\ticket-sales\.env adkantor@192.168.50
 CRON settings
 crontab -e
 
+
+grep CRON /var/log/syslog
+
+
 1 * * * * * /usr/bin/python /home/adkantor/Projects/ticket-sales/script.py > /home/adkantor/Projects/ticket-sales/cron.log 2>&1
 
 line break at the end!
