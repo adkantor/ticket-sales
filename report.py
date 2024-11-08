@@ -25,8 +25,8 @@ def get_data() -> list[dict] | None:
 
 
 def convert_to_df(data:list[dict] ) -> pd.DataFrame:
-    timestamps = [datetime.datetime.fromisoformat(data_item['timestamp']) for data_item in data]
-    remaining_seats = [data_item['data']['prices']['5000'] for data_item in data]
+    timestamps = [datetime.datetime.fromisoformat(data_item['timestamp']) for data_item in data if isinstance(data_item['data']['prices'], dict)]
+    remaining_seats = [data_item['data']['prices']['5000'] for data_item in data if isinstance(data_item['data']['prices'], dict)]
 
     return pd.DataFrame({
         'timestamp': timestamps,
