@@ -19,3 +19,6 @@ line break at the end!
 
 ^O + Enter --> save
 ^X --> exit
+
+pipenv instal ipykernel
+ticket-sales>ipython kernel install --user  --name=ticket-sales
