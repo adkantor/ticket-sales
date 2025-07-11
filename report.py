@@ -13,7 +13,7 @@ from config import settings
 
 PATH_TO_OUTFILE = 'outfile.json'
 PATH_TO_IMAGE = 'report.png'
-TOTAL_SEATS = 660
+TOTAL_SEATS = 504
 
 
 def get_data() -> list[dict] | None:
@@ -26,11 +26,13 @@ def get_data() -> list[dict] | None:
 
 def convert_to_df(data:list[dict] ) -> pd.DataFrame:
     timestamps = [datetime.datetime.fromisoformat(data_item['timestamp']) for data_item in data if isinstance(data_item['data']['prices'], dict)]
-    remaining_seats = [data_item['data']['prices']['5000'] for data_item in data if isinstance(data_item['data']['prices'], dict)]
+    remaining_seats_7500 = [data_item['data']['prices']['7500'] for data_item in data if isinstance(data_item['data']['prices'], dict)]
+    remaining_seats_5500 = [data_item['data']['prices']['5500'] for data_item in data if isinstance(data_item['data']['prices'], dict)]
 
     return pd.DataFrame({
         'timestamp': timestamps,
-        'remaining_seat': remaining_seats,
+        'remaining_seat_7500': remaining_seats_7500,
+        'remaining_seat_5500': remaining_seats_5500,
     })
 
 
@@ -72,7 +74,8 @@ def plot_daily_df(df: pd.DataFrame):
 def plot_hourly_df(df: pd.DataFrame):    
     #x = pd.date_range(start='2024-09-03', end='2024-12-19', freq='h') # df.index
     x = df.index
-    y = df['remaining_seat']
+    y1 = df['remaining_seat_7500']
+    y2 = df['remaining_seat_5500']
 
     fig, ax = plt.subplots()
 
@@ -82,8 +85,9 @@ def plot_hourly_df(df: pd.DataFrame):
 
 
     # add data
-    ax.plot(x, y, color='#f8bbd0', zorder=3)
-    plt.xticks(pd.date_range(start='2024-09-03', end='2024-12-19', freq='7D'))
+    ax.plot(x, y1, color='#f8bbd0', zorder=3)
+    ax.plot(x, y2, color="#6a94f1", zorder=4)
+    plt.xticks(pd.date_range(start='2025-07-10', end='2025-11-30', freq='7D'))
     # add gridlines
     ax.yaxis.grid(which='major', color='lightgrey', zorder=0)
     # remove spines
@@ -96,14 +100,18 @@ def plot_hourly_df(df: pd.DataFrame):
     # format x axis
     plt.gcf().autofmt_xdate(rotation=90, ha='center')
     # add y axis limits
-    ax.set_ylim([0, 660])
+    ax.set_ylim((0, 264))
     # show last value as annotation
-    value = df['remaining_seat'].iloc[-1]
-    coord_x = df.index[-1] + datetime.timedelta(days=3)
-    coord_y = value - 10
-    ann = ax.annotate(value, [coord_x, coord_y])
-    ann.set_bbox(dict(facecolor='white', alpha=0.5, edgecolor='grey'))
-
+    value1 = df['remaining_seat_7500'].iloc[-1]
+    coord_x1 = df.index[-1] + datetime.timedelta(days=3)
+    coord_y1 = value1 - 10
+    ann1 = ax.annotate(value1, (coord_x1, coord_y1))
+    ann1.set_bbox(dict(facecolor='white', alpha=0.5, edgecolor='grey'))
+    value2 = df['remaining_seat_5500'].iloc[-1]
+    coord_x2 = df.index[-1] + datetime.timedelta(days=3)
+    coord_y2 = value2 - 10
+    ann2 = ax.annotate(value2, (coord_x2, coord_y2))
+    ann2.set_bbox(dict(facecolor='white', alpha=0.5, edgecolor='grey'))
 
 
 def send_report(markdown_text: str, image_path: str):
@@ -113,7 +121,7 @@ def send_report(markdown_text: str, image_path: str):
 
     # Create the root message and fill in the from, to, and subject headers
     message = MIMEMultipart('related')
-    message['Subject'] = 'MOM LC koncert - report'
+    message['Subject'] = 'Vigadó LC koncert - report'
     message['From'] = sender_email
     message['To'] = receiver_email
     message.preamble = 'This is a multi-part message in MIME format.'

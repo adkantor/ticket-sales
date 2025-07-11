@@ -163,3 +163,5 @@ cython_debug/
 outfile.csv
 outfile.json
 report.png
+
+old/*
