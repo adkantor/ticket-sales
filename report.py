@@ -103,13 +103,13 @@ def plot_hourly_df(df: pd.DataFrame):
     ax.set_ylim((0, 264))
     # show last value as annotation
     value1 = df['remaining_seat_7500'].iloc[-1]
-    coord_x1 = df.index[-1] + datetime.timedelta(days=15)
-    coord_y1 = value1 + 20
+    value2 = df['remaining_seat_5500'].iloc[-1]
+    coord_x1 = df.index[-1] + datetime.timedelta(days=10)
+    coord_y1 = max(value1, value2 + 20) if value1 > value2 else min(value1, value2 - 20)
     ann1 = ax.annotate(value1, (coord_x1, coord_y1))
     ann1.set_bbox(dict(facecolor='white', alpha=0.5, edgecolor='grey'))
-    value2 = df['remaining_seat_5500'].iloc[-1]
-    coord_x2 = df.index[-1] + datetime.timedelta(days=3)
-    coord_y2 = value2 - 20
+    coord_x2 = df.index[-1] + datetime.timedelta(days=10)
+    coord_y2 = max(value2, value1 + 20) if value2 > value1 else min(value2, value1 - 20)
     ann2 = ax.annotate(value2, (coord_x2, coord_y2))
     ann2.set_bbox(dict(facecolor='white', alpha=0.5, edgecolor='grey'))
 
